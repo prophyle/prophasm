@@ -28,7 +28,7 @@ See [Releases](https://github.com/prophyle/prophyle_assembler/releases).
 
 ## Licence
 
-[MIT](https://github.com/prophyle/prophyle_assember/master/LICENSE)
+[MIT](https://github.com/prophyle/prophyle_assembler/blob/master/LICENSE)
 
 
 ## Author
