@@ -14,6 +14,7 @@
 ```
 git clone https://github.com/prophyle/prophyle_assembler
 cd prophyle_assembler && make -j
+./prophyle_assembler -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
 ```
 
 ## Algorithm
