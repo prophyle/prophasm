@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/prophyle/prophyle_assembler.svg?branch=master)](https://travis-ci.org/prophyle/prophyle_assembler)
 
-![Greedy assembly](greedy_assembly.png)
-![Subtraction of k-mer sets](kmer_set_subtraction.png)
 
 ## Prerequisities
 
@@ -17,6 +15,11 @@
 git clone https://github.com/prophyle/prophyle_assembler
 cd prophyle_assembler && make -j
 ```
+
+## Algorithm
+
+![Greedy assembly](greedy_assembly.png)
+![Subtraction of k-mer sets](kmer_set_subtraction.png | width=300)
 
 
 ## Issues
@@ -37,4 +40,3 @@ See [Releases](https://github.com/prophyle/prophyle_assembler/releases).
 ## Author
 
 Karel Brinda \<kbrinda@hsph.harvard.edu\>
-
