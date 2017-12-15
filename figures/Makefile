@@ -5,8 +5,8 @@ SHELL=/usr/bin/env bash -eo pipefail
 .SECONDARY:
 
 all:
-	convert -density 400 greedy_assembly.pdf greedy_assembly.png
-	convert subtraction.pdf subtraction.png
+	convert -flatten -density 400 greedy_assembly.pdf -alpha off greedy_assembly.png
+	convert -flatten subtraction.pdf -alpha off subtraction.png
 
 clean: ## Clean
 
