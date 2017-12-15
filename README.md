@@ -18,8 +18,8 @@ cd prophyle_assembler && make -j
 
 ## Algorithm
 
-![Greedy assembly](figures/greedy_assembly.png)
-![Subtraction of k-mer sets](figures/subtraction.png)
+
+<img alt="Greedy assembly" src="figures/greedy_assembly.png" height="180px" /><img alt="Subtraction of k-mer sets" src="figures/subtraction.png" height="180px" />
 
 
 ## Issues
