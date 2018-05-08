@@ -18,7 +18,7 @@ matrix:
     - os: osx
       compiler: clang-3.7
       install:
-         - pip install biopython
+         - /usr/bin/env pip3 install biopython
 
 
 script:
