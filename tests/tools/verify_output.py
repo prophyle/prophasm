@@ -1,14 +1,15 @@
-#! /usr/bin/env python3
-"""A program to verify output of prophyle-assembler.
+#! /usr/bin/env python2.7
+
+"""A program to verify output of prophasm.
 
 Author: Karel Brinda <kbrinda@hsph.harvard.edu>
 
 Licence: MIT
 """
 
-import sys
+import collections
 import re
-from Bio import SeqIO
+import sys
 
 in1_fn = sys.argv[1]
 in2_fn = sys.argv[2]
@@ -26,6 +27,24 @@ comp_dict = {
     "T": "A",
 }
 
+def load_fasta(fn):
+    d=collections.defaultdict(list)
+    with open(fn) as f:
+        seqname="_"
+        for line in f:
+            line=line.strip()
+            if len(line)==0:
+                continue
+            if line[0]==">":
+                seqname, _, _ = line.partition(" ")
+            else:
+                d[seqname].append(line)
+    dd={}
+    for k in d:
+        dd[k]="".join(d[k])
+
+    return dd
+
 
 def reverse_complement_str(dna):
     reverse_complement = "".join([comp_dict[x] for x in dna[::-1]])
@@ -37,9 +56,9 @@ def get_canonical_kmers_from_fasta(fasta_fn, k):
 
     reg_splitting = re.compile("[^ACGT]")
     set_of_kmers = set()
-    fasta_sequences = SeqIO.parse(fasta_fn, 'fasta')
-    for fasta_seq in fasta_sequences:
-        name, sequence = fasta_seq.id, str(fasta_seq.seq).upper()
+    fasta_sequences = load_fasta(fasta_fn)
+    for name in fasta_sequences:
+        sequence = fasta_sequences[name].upper()
         sequences_ok = reg_splitting.split(sequence)
         for seq in sequences_ok:
             for i in range(len(seq) - k + 1):

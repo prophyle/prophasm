@@ -1,4 +1,4 @@
-.PHONY: all help clean test prophasm
+.PHONY: all help clean test prophasm readme
 
 SHELL=/usr/bin/env bash -eo pipefail
 
@@ -10,12 +10,15 @@ prophasm:
 	$(MAKE) -C src
 
 help: ## Print help message
-	    @echo "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s : | sort)"
+	@echo "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s : | sort)"
 
 test:
 	$(MAKE) -C tests
 
+readme:
+	 md2html README.md > README.html
+
 clean: ## Clean
 	$(MAKE) -C src clean
 	$(MAKE) -C tests clean
-	rm -f prophasm
+	rm -f prophasm README.html
