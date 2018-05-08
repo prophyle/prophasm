@@ -16,7 +16,19 @@ test:
 	$(MAKE) -C tests
 
 readme:
-	 md2html README.md > README.html
+	f=$$(mktemp);\
+	  echo $$f;\
+	  sed '/USAGE-BEGIN/q' README.md >> $$f; \
+	  printf '```' >> $$f; \
+	  ./prophasm -h 2>&1 | perl -pe 's/^(.*)$$/\1/g' >> $$f; \
+	  printf '```\n\n' >> $$f; \
+	  sed -n '/USAGE-END/,$$ p' README.md >> $$f;\
+	  cat $$f \
+	  | perl -pe 's/^[\s]+$$/\n/g' \
+	  | perl -pe 's/[\s]+$$/\n/g' \
+	  > README.md;
+	md2html README.md > README.html
+
 
 clean: ## Clean
 	$(MAKE) -C src clean
