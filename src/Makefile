@@ -9,7 +9,7 @@ all: ../prophasm
 ../prophasm: prophasm.o
 	$(CXX) $(CXXFLAGS) $(DFLAGS) $^ -o $@ -L. $(LIBS)
 
-prophasm.o: prophasm.cpp kseq.h
+prophasm.o: prophasm.cpp $(wildcard *.h)
 	$(CXX) $(CXXFLAGS) $(DFLAGS) -c $<
 
 clean:

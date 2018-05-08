@@ -39,6 +39,7 @@ Todo:
 	* Check memory consumption (and put it here).
 */
 #include "kseq.h"
+#include "version.h"
 
 #include <zlib.h>
 
@@ -92,6 +93,7 @@ void print_help(){
 	std::cerr <<
 		"\n" <<
 		"Program:  prophasm (a greedy assembler for k-mer set compression)\n" <<
+		"Version:  " VERSION "\n" <<
 		"Contact:  Karel Brinda <kbrinda@hsph.harvard.edu>\n" <<
 		"\n" <<
 		"Usage:    prophasm [options]\n" <<
