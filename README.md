@@ -1,6 +1,6 @@
-# ProPhyle Assembler
+# ProphAsm
 
-[![Build Status](https://travis-ci.org/prophyle/prophyle_assembler.svg?branch=master)](https://travis-ci.org/prophyle/prophyle_assembler)
+[![Build Status](https://travis-ci.org/prophyle/prophasm.svg?branch=master)](https://travis-ci.org/prophyle/prophasm)
 
 
 ## Prerequisities
@@ -12,9 +12,9 @@
 ## Getting started
 
 ```
-git clone https://github.com/prophyle/prophyle_assembler
-cd prophyle_assembler && make -j
-./prophyle_assembler -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
+git clone https://github.com/prophyle/prophasm
+cd prophasm && make -j
+./prophasm -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
 ```
 
 ## Algorithm
@@ -25,17 +25,17 @@ cd prophyle_assembler && make -j
 
 ## Issues
 
-Please use [Github issues](https://github.com/prophyle/prophyle_assembler/issues).
+Please use [Github issues](https://github.com/prophyle/prophasm/issues).
 
 
 ## Changelog
 
-See [Releases](https://github.com/prophyle/prophyle_assembler/releases).
+See [Releases](https://github.com/prophyle/prophasm/releases).
 
 
 ## Licence
 
-[MIT](https://github.com/prophyle/prophyle_assembler/blob/master/LICENSE)
+[MIT](https://github.com/prophyle/prophasm/blob/master/LICENSE)
 
 
 ## Author
