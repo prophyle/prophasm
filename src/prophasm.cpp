@@ -91,16 +91,16 @@ KSEQ_INIT(gzFile, gzread)
 void print_help(){
 	std::cerr <<
 		"\n" <<
-		"Program:  prophyle_assembler (greedy assembler for ProPhyle)\n" <<
+		"Program:  prophasm (a greedy assembler for k-mer set compression)\n" <<
 		"Contact:  Karel Brinda <kbrinda@hsph.harvard.edu>\n" <<
 		"\n" <<
-		"Usage:    prophyle_assembler [options]\n" <<
+		"Usage:    prophasm [options]\n" <<
 		"\n" <<
-		"Examples: prophyle_assembler -k 15 -i f1.fa -i f2.fa -x fx.fa\n" <<
+		"Examples: prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa\n" <<
 		"             - compute intersection of f1 and f2\n" <<
-		"          prophyle_assembler -k 15 -i f1.fa -i f2.fa -x fx.fa -o g1.fa -o g2.fa\n" <<
+		"          prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa -o g1.fa -o g2.fa\n" <<
 		"             - compute intersection of f1 and f2, and subtract it from them\n" <<
-		"          prophyle_assembler -k 15 -i f1.fa -o g1.fa\n" <<
+		"          prophasm -k 15 -i f1.fa -o g1.fa\n" <<
 		"             - re-assemble f1 to g1\n" <<
 		"\n" <<
 		"Command-line parameters:\n" <<

@@ -4,13 +4,13 @@ LIBS      = -lz
 
 .PHONY: all clean
 
-all: ../prophyle_assembler
+all: ../prophasm
 
-../prophyle_assembler: prophyle_assembler.o
+../prophasm: prophasm.o
 	$(CXX) $(CXXFLAGS) $(DFLAGS) $^ -o $@ -L. $(LIBS)
 
-prophyle_assembler.o: prophyle_assembler.cpp kseq.h
+prophasm.o: prophasm.cpp kseq.h
 	$(CXX) $(CXXFLAGS) $(DFLAGS) -c $<
 
 clean:
-	rm -f prophyle_assembler *.o
+	rm -f prophasm *.o

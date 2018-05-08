@@ -1,12 +1,12 @@
-.PHONY: all help clean test
+.PHONY: all help clean test prophasm
 
 SHELL=/usr/bin/env bash -eo pipefail
 
 .SECONDARY:
 
-all: prophyle_assembler
+all: prophasm
 
-prophyle_assembler:
+prophasm:
 	$(MAKE) -C src
 
 help: ## Print help message
@@ -18,4 +18,4 @@ test:
 clean: ## Clean
 	$(MAKE) -C src clean
 	$(MAKE) -C tests clean
-	rm -f prophyle_assembler
+	rm -f prophasm
