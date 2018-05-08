@@ -1,4 +1,4 @@
-TESTS = $(wildcard */.)
+TESTS = $(wildcard ??_*/.)
 
 .PHONY: all help clean $(TESTS) parallel
 
