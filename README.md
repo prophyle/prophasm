@@ -17,7 +17,7 @@ cd prophasm && make -j
 ./prophasm -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
 ```
 
-## Commands
+## Command line parameters
 
 <!---
 USAGE-BEGIN
