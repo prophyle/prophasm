@@ -19,9 +19,9 @@ readme:
 	f=$$(mktemp);\
 	  echo $$f;\
 	  sed '/USAGE-BEGIN/q' README.md >> $$f; \
-	  printf '```' >> $$f; \
+	  printf -- '-->\n```' >> $$f; \
 	  ./prophasm -h 2>&1 | perl -pe 's/^(.*)$$/\1/g' >> $$f; \
-	  printf '```\n\n' >> $$f; \
+	  printf '```\n<!---\n' >> $$f; \
 	  sed -n '/USAGE-END/,$$ p' README.md >> $$f;\
 	  cat $$f \
 	  | perl -pe 's/^[\s]+$$/\n/g' \

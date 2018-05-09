@@ -21,6 +21,7 @@ cd prophasm && make -j
 
 <!---
 USAGE-BEGIN
+-->
 ```
 Program:  prophasm (a greedy assembler for k-mer set compression)
 Version:  0.1.0
@@ -46,7 +47,7 @@ Command-line parameters:
 Note that '-' can be used for standard input/output.
 
 ```
-
+<!---
 USAGE-END
 -->
 
