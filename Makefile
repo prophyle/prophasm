@@ -26,8 +26,8 @@ readme:
 	  cat $$f \
 	  | perl -pe 's/^[\s]+$$/\n/g' \
 	  | perl -pe 's/[\s]+$$/\n/g' \
-	  > README.md;
-	md2html README.md > README.html
+	  > README.md
+	markdown_py README.md > README.html
 
 
 clean: ## Clean
