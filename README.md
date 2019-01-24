@@ -56,6 +56,11 @@ USAGE-END
 
 <img alt="Greedy assembly" src="figures/greedy_assembly.png" height="150px" width="540px" /><img alt="Subtraction of k-mer sets" src="figures/subtraction.png" height="180px" width="355px" />
 
+## Similar programs
+
+* [BCalm 2](https://github.com/GATB/bcalm)
+* [Unikmer](https://github.com/shenwei356/unikmer)
+
 
 ## Issues
 
