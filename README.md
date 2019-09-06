@@ -2,6 +2,28 @@
 
 [![Build Status](https://travis-ci.org/prophyle/prophasm.svg?branch=master)](https://travis-ci.org/prophyle/prophasm)
 
+<!-- vim-markdown-toc GFM -->
+
+* [Introduction](#introduction)
+* [Prerequisities](#prerequisities)
+* [Getting started](#getting-started)
+* [Examples](#examples)
+* [Command line parameters](#command-line-parameters)
+* [Algorithm](#algorithm)
+* [Similar programs](#similar-programs)
+* [Issues](#issues)
+* [Changelog](#changelog)
+* [Licence](#licence)
+* [Author](#author)
+
+<!-- vim-markdown-toc -->
+
+## Introduction
+
+ProphAsm is a tool for computing simplitigs from k-mer sets and for k-mer set manipulation. Simplitigs are genomic sequences computed as disjoint paths in a bidirectional vertex-centric de Bruijn graph. Compared to unitigs, simplitigs provide an improvement in the total number of sequences and their cumulative length, while both representations contain exactly the same k-mers
+
+Upon execution, ProphAsm first loads all specified datasets (see the `-i` param) and computes their k-mer sets (see the `-k` param). If the `-x` param is provided, ProphAsm then computes their intersection, subtracts the intersection from the individual k-mer sets and computes unitigs for the intersection. If output files are specified (see the `-o` param).
+
 
 ## Prerequisities
 
@@ -16,6 +38,16 @@ git clone https://github.com/prophyle/prophasm
 cd prophasm && make -j
 ./prophasm -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
 ```
+
+## Examples
+
+```bash
+prophasm -k 31 -i input.fa -o simplitigs.fa  # compute simplitigs for a single dataset
+prophasm -k 31 -i inset1.fa -i inset2.fa -o outset1.fa outset2.fa  # compute simplitigs for two datasets
+prophasm -k 31 -i inset1.fa -i inset2.fa -x intersect.fa -o outset1.fa outset2.fa  # compute simplitigs for two datasets and subtract their intersection
+
+```
+
 
 ## Command line parameters
 
@@ -47,19 +79,20 @@ Command-line parameters:
 Note that '-' can be used for standard input/output.
 
 ```
+
 <!---
 USAGE-END
 -->
 
-## Algorithm
 
+## Algorithm
 
 <img alt="Greedy assembly" src="figures/greedy_assembly.png" height="150px" width="540px" /><img alt="Subtraction of k-mer sets" src="figures/subtraction.png" height="180px" width="355px" />
 
 ## Similar programs
 
-* [BCalm 2](https://github.com/GATB/bcalm)
-* [Unikmer](https://github.com/shenwei356/unikmer)
+* [BCalm 2](https://github.com/GATB/bcalm) - Computation of unitigs.
+* [Unikmer](https://github.com/shenwei356/unikmer) - K-mer set operations.
 
 
 ## Issues
@@ -79,4 +112,4 @@ See [Releases](https://github.com/prophyle/prophasm/releases).
 
 ## Author
 
-Karel Brinda \<kbrinda@hsph.harvard.edu\>
+Karel Brinda \<karel.brinda@hms.harvard.edu\>
