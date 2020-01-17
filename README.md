@@ -130,11 +130,11 @@ def compute_simplitigs (kmers):
 	for kmer in kmers:
 		K.add (kmer)
 		K.add (reverse_completement(kmer))
-		simplitigs = set()
-		while |K|>0:
-			initial_kmer = K.random()
-			K, simplitig = get_maximal_simplitig (K, initial_kmer)
-			simplitigs.add (simplitig)
+	simplitigs = set()
+	while |K|>0:
+		initial_kmer = K.random()
+		K, simplitig = get_maximal_simplitig (K, initial_kmer)
+		simplitigs.add (simplitig)
 	return simplitigs
 ```
 
