@@ -100,7 +100,47 @@ USAGE-END
 
 ## Algorithm
 
+```python
+def extend_simplitig_forward (K, simplitig):
+	extending = True
+	while extending:
+		extending = False
+		q = simplitig[-k+1:]
+		for x in [‘A’, ‘C’, ‘G’, ‘T’]:
+			kmer = q + x
+			if kmer in K:
+				extending = True
+				simplitig = simplitig + x
+				S.remove (kmer)
+				S.remove (reverse_complement (kmer))
+				break
+	return S, s
+ 
+def get_maximal_simplitig (K, initial_kmer):
+	simplitig = initial_kmer
+	K.remove (initial_kmer)
+	K.remove (reverse_completement (initial_kmer))
+	K, simplitig = extend_simplitig_forward (K, simplitig)
+	simplitig = reverse_completent (simplitig)
+	K, simplitig = extend_simplitig_forward (K, simplitig)
+	return K, simplitig
+ 
+def compute_simplitigs (kmers):
+	K = set()
+	for kmer in kmers:
+		K.add (kmer)
+		K.add (reverse_completement(kmer))
+		simplitigs = set()
+		while |K|>0:
+			initial_kmer = K.random()
+			K, simplitig = get_maximal_simplitig (K, initial_kmer)
+			simplitigs.add (simplitig)
+	return simplitigs
+```
+
+<!--
 <img alt="Greedy assembly" src="figures/greedy_assembly.png" height="150px" width="540px" /><img alt="Subtraction of k-mer sets" src="figures/subtraction.png" height="180px" width="355px" />
+-->
 
 ## Similar programs
 
