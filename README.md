@@ -25,6 +25,19 @@ ProphAsm is a tool for computing simplitigs from k-mer sets and for k-mer set ma
 Upon execution, ProphAsm first loads all specified datasets (see the `-i` param) and computes their k-mer sets (see the `-k` param). If the `-x` param is provided, ProphAsm then computes their intersection, subtracts the intersection from the individual k-mer sets and computes unitigs for the intersection. If output files are specified (see the `-o` param).
 
 
+## Cite
+
+If you want to cite ProphAsm, please use the following reference:
+
+> Brinda K, Baym M, and Kucherov G. **Simplitigs as an efficient and scalable representation of de Bruijn graphs**
+. bioRxiv 2020.01.12.903443, 2020. https://doi.org/10.1101/2020.01.12.903443
+
+If you want to cite the concept of simplitigs, please include also the parallel manuscript (the same concept discovered independently and simultaneously):
+
+> Rahman A and Medvedev P. **Representation of k-mer sets using spectrum-preserving string sets**
+. bioRxiv 2020.01.07.896928, 2020. https://doi.org/10.1101/2020.01.07.896928
+
+
 ## Prerequisities
 
 * GCC 4.8+ or equivalent
