@@ -34,8 +34,8 @@ Description:
         de-Bruijn graphs.
 
 Todo:
-        * Find a library for sets of integers bigger than uint64_t (to support k-mers longer than
-32).
+        * Find a library for sets of integers bigger than uint64_t
+          (to support k-mers longer than 32).
         * Optimize loading FASTA files.
 */
 #include <getopt.h>
@@ -370,8 +370,6 @@ int32_t find_intersection(const std::vector<_set_T> &sets, _set_T &intersection)
     int32_t min   = std::numeric_limits<int32_t>::max();
     int32_t i_min = -1;
 
-    // std::cerr << "searching min" << std::endl;
-
     for (int32_t i = 0; i < static_cast<int32_t>(sets.size()); i++) {
         if (static_cast<int32_t>(sets[i].size()) < min) {
             min   = sets[i].size();
@@ -385,11 +383,7 @@ int32_t find_intersection(const std::vector<_set_T> &sets, _set_T &intersection)
     /*
             2) Take it as the intersection.
     */
-
-    // std::cerr << "2" << std::endl;
-
     intersection.clear();
-    // std::cerr << "2.1" << std::endl;
     std::copy(sets[i_min].cbegin(), sets[i_min].cend(),
               std::inserter(intersection, intersection.end()));
 
@@ -468,7 +462,6 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
             bool extending = true;
 
             // std::cerr << "central k-mer: " << central_kmer_string << std::endl;
-
             while (extending) {
                 for (int32_t i = 0; i < k; i++) {
                     kmer_str[i] = kmer_str[i + 1];
@@ -501,8 +494,6 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
                 }
             }
         }
-
-        // std::cerr << "====================" << std::endl;
 
         std::stringstream ss;
         ss << "c" << simplitig_id;
