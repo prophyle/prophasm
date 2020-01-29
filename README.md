@@ -69,8 +69,8 @@ USAGE-BEGIN
 -->
 ```
 Program:  prophasm (a greedy assembler for k-mer set compression)
-Version:  0.1.0
-Contact:  Karel Brinda <kbrinda@hsph.harvard.edu>
+Version:  0.1.1
+Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>
 
 Usage:    prophasm [options]
 
@@ -92,7 +92,6 @@ Command-line parameters:
 Note that '-' can be used for standard input/output.
 
 ```
-
 <!---
 USAGE-END
 -->
@@ -115,7 +114,7 @@ def extend_simplitig_forward (K, simplitig):
 				S.remove (reverse_complement (kmer))
 				break
 	return S, s
- 
+
 def get_maximal_simplitig (K, initial_kmer):
 	simplitig = initial_kmer
 	K.remove (initial_kmer)
@@ -124,7 +123,7 @@ def get_maximal_simplitig (K, initial_kmer):
 	simplitig = reverse_completent (simplitig)
 	K, simplitig = extend_simplitig_forward (K, simplitig)
 	return K, simplitig
- 
+
 def compute_simplitigs (kmers):
 	K = set()
 	for kmer in kmers:

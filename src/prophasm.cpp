@@ -1,7 +1,7 @@
 /*
 	The MIT License
 
-	Copyright (c) 2016-2017 Karel Brinda <kbrinda@hsph.harvard.edu>
+	Copyright (c) 2016-2020 Karel Brinda <karel.brinda@hms.harvard.edu>
 
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
@@ -29,14 +29,13 @@
 Description:
 
 	Get k-mer sets from FASTA files, extract the intersection, and
-	assemble all the resulting k-mer sets into contigs. The assembly is
+	assemble all the resulting k-mer sets into simplitigs. The assembly is
 	done by greedy enumeration of disjoint paths in the corresponding
 	de-Bruijn graphs.
 
 Todo:
 	* Find a library for sets of integers bigger than uint64_t (to support k-mers longer than 32).
 	* Optimize loading FASTA files.
-	* Check memory consumption (and put it here).
 */
 #include "kseq.h"
 #include "version.h"
@@ -94,7 +93,7 @@ void print_help(){
 		"\n" <<
 		"Program:  prophasm (a greedy assembler for k-mer set compression)\n" <<
 		"Version:  " VERSION "\n" <<
-		"Contact:  Karel Brinda <kbrinda@hsph.harvard.edu>\n" <<
+		"Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>\n" <<
 		"\n" <<
 		"Usage:    prophasm [options]\n" <<
 		"\n" <<
