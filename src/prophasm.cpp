@@ -59,7 +59,7 @@ typedef uint64_t nkmer_t;
 typedef std::set<nkmer_t> set_t;
 
 const int32_t fasta_line_length=60;
-const int32_t max_contig_length=10000000;
+const int32_t max_simplitig_length=10000000;
 const int32_t max_allowed_kmer_length=sizeof(nkmer_t)*4;
 //const int32_t default_k=31;
 
@@ -219,16 +219,16 @@ void debug_print_kmer_set(_set_T &set, int k, bool verbose){
 }
 
 
-struct contig_t{
+struct simplitig_t{
 	int32_t k;
 
-	/* contig buffer */
+	/* simplitig buffer */
 	char *seq_buffer;
 
-	/* the first position of the contig */
+	/* the first position of the simplitig */
 	char *l_ext;
 
-	/* the last position of the contig +1 (semiopen ) */
+	/* the last position of the simplitig +1 (semiopen ) */
 	char *r_ext;
 
 	/* min possible value of l_ext */
@@ -237,17 +237,17 @@ struct contig_t{
 	/* max possible value of l_ext */
 	char *r_ext_border;
 
-	contig_t(uint32_t _k){
+	simplitig_t(uint32_t _k){
 		this->k=_k;
-		seq_buffer=new char[k+2*max_contig_length+1]();
+		seq_buffer=new char[k+2*max_simplitig_length+1]();
 		l_ext_border=seq_buffer;
-		r_ext_border=seq_buffer+2*max_contig_length;
+		r_ext_border=seq_buffer+2*max_simplitig_length;
 	}
 
-	int32_t new_contig(const char *base_kmer){
+	int32_t new_simplitig(const char *base_kmer){
 		assert(static_cast<int32_t>(strlen(base_kmer))==k);
 
-		l_ext = r_ext = &seq_buffer[max_contig_length];
+		l_ext = r_ext = &seq_buffer[max_simplitig_length];
 		*r_ext='\0';
 
 		for(int32_t i=0;i<k;i++){
@@ -281,7 +281,7 @@ struct contig_t{
 		return 0;
 	}
 
-	~contig_t(){
+	~simplitig_t(){
 		delete[] seq_buffer;
 	}
 
@@ -289,11 +289,11 @@ struct contig_t{
 		return (r_ext>=r_ext_border) || (l_ext<=l_ext_border);
 	}
 
-	int32_t print_to_fasta(FILE* fasta_file, const char* contig_name, const char *comment=nullptr) const {
+	int32_t print_to_fasta(FILE* fasta_file, const char* simplitig_name, const char *comment=nullptr) const {
 		if (comment==nullptr){
-			fprintf(fasta_file,">%s\n",contig_name);
+			fprintf(fasta_file,">%s\n",simplitig_name);
 		} else {
-			fprintf(fasta_file,">%s %s\n",contig_name,comment);
+			fprintf(fasta_file,">%s %s\n",simplitig_name,comment);
 		}
 
 		char print_buffer[fasta_line_length+1]={0};
@@ -452,11 +452,11 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE* fstats, 
 		test_file(file, fasta_fn);
 	}
 	char kmer_str[max_allowed_kmer_length+1];
-	contig_t contig(k);
+	simplitig_t simplitig(k);
 	const std::vector<char> nucls = {'A','C','G','T'};
 
 	//int32_t i=0;
-	int32_t contig_id=1;
+	int32_t simplitig_id=1;
 	while(set.size()>0){
 
 		const auto central_nkmer=*(set.begin());
@@ -464,7 +464,7 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE* fstats, 
 
 		std::string central_kmer_string;
 		decode_kmer(central_nkmer,k,central_kmer_string);
-		contig.new_contig(central_kmer_string.c_str());
+		simplitig.new_simplitig(central_kmer_string.c_str());
 
 		typename _set_T::value_type nkmer;
 
@@ -504,17 +504,17 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE* fstats, 
 					if(set.count( nkmer )){
 						//std::cerr << "extending " << c << std::endl;
 						//debug_print_kmer_set(set,k);
-						//std::cerr << std::string(contig.l_ext) << c << std::endl;
+						//std::cerr << std::string(simplitig.l_ext) << c << std::endl;
 						//std::cerr << std::endl;
 						if(direction==0){
-							contig.r_extend(c);
+							simplitig.r_extend(c);
 						}
 						else{
-							contig.l_extend(c);
+							simplitig.l_extend(c);
 						}
 						set.erase(nkmer);
 
-						if(!contig.is_full()){
+						if(!simplitig.is_full()){
 							extending=true;
 						}
 						break;
@@ -526,16 +526,16 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE* fstats, 
 		//std::cerr << "====================" << std::endl;
 
 		std::stringstream ss;
-		ss<<"c"<<contig_id;
-		const std::string contig_name(ss.str());
-		contig.print_to_fasta(file,contig_name.c_str());
-		contig_id++;
+		ss<<"c"<<simplitig_id;
+		const std::string simplitig_name(ss.str());
+		simplitig.print_to_fasta(file,simplitig_name.c_str());
+		simplitig_id++;
 	}
 
 	fclose(file);
 
 	if(verbose){
-		std::cerr << "   assembly finished (" << contig_id << " contigs)" << std::endl;
+		std::cerr << "   assembly finished (" << simplitig_id << " simplitigs)" << std::endl;
 	}
 
 	return 0;
