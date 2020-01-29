@@ -58,8 +58,8 @@ Todo:
 typedef uint64_t nkmer_t;
 typedef std::set<nkmer_t> set_t;
 
-const int32_t fasta_line_length=60;
 const int32_t max_simplitig_length=10000000;
+const int32_t fasta_line_length=max_simplitig_length; // do not break fasta lines
 const int32_t max_allowed_kmer_length=sizeof(nkmer_t)*4;
 //const int32_t default_k=31;
 
