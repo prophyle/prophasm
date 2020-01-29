@@ -16,7 +16,7 @@ test:
 	$(MAKE) -C tests
 
 format:
-	clang-format -i src/*.cpp src/*.h
+	clang-format -i src/*.cpp #src/*.h
 
 readme:
 	f=$$(mktemp);\

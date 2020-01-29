@@ -65,6 +65,7 @@ const int32_t max_allowed_kmer_length=sizeof(nkmer_t)*4;
 
 static const uint8_t nt4_nt256[] = "ACGTN";
 
+// clang-format off
 static const uint8_t nt256_nt4[] = {
 		4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,
 		4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,
@@ -83,6 +84,7 @@ static const uint8_t nt256_nt4[] = {
 		4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,
 		4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4,  4, 4, 4, 4
 	};
+// clang-format on
 
 
 KSEQ_INIT(gzFile, gzread)
