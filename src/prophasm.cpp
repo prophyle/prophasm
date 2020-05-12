@@ -104,13 +104,13 @@ void print_help() {
               << "             - re-assemble f1 to g1\n"
               << "\n"
               << "Command-line parameters:\n"
-              << " -k INT   K-mer size.\n"
+              << " -k INT   K-mer length.\n"
               << " -i FILE  Input FASTA file (can be used multiple times).\n"
               << " -o FILE  Output FASTA file (if used, must be used as many times as -i).\n"
               << " -x FILE  Compute intersection, subtract it, save it.\n"
               << " -s FILE  Output file with k-mer statistics.\n"
               <<
-        //" -k INT   K-mer size. [" << default_k << "]\n" <<
+        //" -k INT   K-mer length. [" << default_k << "]\n" <<
         " -S       Silent mode.\n"
               << "\n"
               << "Note that '-' can be used for standard input/output. \n"
@@ -308,7 +308,7 @@ template <typename _set_T>
 int kmers_from_fasta(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats,
                      bool verbose) {
     if (verbose) {
-        std::cerr << "Loading " << fasta_fn << std::endl;
+        std::cerr << "   loading " << fasta_fn << std::endl;
     }
 
     set.clear();
@@ -429,7 +429,9 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
     const std::vector<char> nucls = {'A', 'C', 'G', 'T'};
 
     // int32_t i=0;
-    int32_t simplitig_id = 1;
+    int64_t simplitig_id = 1;
+    int64_t kmers        = set.size();
+
     while (set.size() > 0) {
         const auto central_nkmer = *(set.begin());
         set.erase(central_nkmer);
@@ -498,8 +500,11 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
 
     fclose(file);
 
+    const int64_t ns = simplitig_id;
+    const int64_t cl = kmers + ns * (k - 1);
     if (verbose) {
-        std::cerr << "   assembly finished (" << simplitig_id << " simplitigs)" << std::endl;
+        std::cerr << "   simplitig computation finished (" << ns << " simplitigs, "
+                  << cl / (1024.0 * 1024.0) << " Mbp)" << std::endl;
     }
 
     return 0;
@@ -577,12 +582,12 @@ int main(int argc, char *argv[]) {
 
     if (k == -1) {
         print_help();
-        std::cerr << "K-mer size (-k) is required." << std::endl;
+        std::cerr << "K-mer length (-k) is required." << std::endl;
         return EXIT_FAILURE;
     }
 
     if (k <= 0 || max_allowed_kmer_length < k) {
-        std::cerr << "K-mer size must satisfy 1 <= k <= " << max_allowed_kmer_length << "."
+        std::cerr << "K-mer length must satisfy 1 <= k <= " << max_allowed_kmer_length << "."
                   << std::endl;
         return EXIT_FAILURE;
     }
@@ -605,9 +610,9 @@ int main(int argc, char *argv[]) {
     std::vector<std::unordered_set<nkmer_t>> full_sets(no_sets);
 
     if (verbose) {
-        std::cerr << "=====================" << std::endl;
-        std::cerr << "1) Loading references" << std::endl;
-        std::cerr << "=====================" << std::endl;
+        std::cerr << "======================" << std::endl;
+        std::cerr << "1) Loading input files" << std::endl;
+        std::cerr << "======================" << std::endl;
     }
 
     std::vector<int32_t> in_sizes;
@@ -631,17 +636,17 @@ int main(int argc, char *argv[]) {
 
     if (compute_intersection) {
         if (verbose) {
-            std::cerr << "2.1) Computing intersection" << std::endl;
+            std::cerr << "2.1) Computing the intersection" << std::endl;
         }
 
         find_intersection(full_sets, intersection);
         intersection_size = intersection.size();
         if (verbose) {
-            std::cerr << "   intersection size: " << intersection_size << std::endl;
+            std::cerr << "   intersection size: " << intersection_size << " k-mers" << std::endl;
         }
         if (compute_output) {
             if (verbose) {
-                std::cerr << "2.2) Removing this intersection from all kmer sets" << std::endl;
+                std::cerr << "2.2) Computing set differences" << std::endl;
             }
             remove_subset(full_sets, intersection);
         }
@@ -652,16 +657,18 @@ int main(int argc, char *argv[]) {
             out_sizes.insert(out_sizes.end(), full_sets[i].size());
             assert(in_sizes[i] == out_sizes[i] + intersection_size);
             if (verbose) {
-                std::cerr << in_sizes[i] << " " << out_sizes[i] << " ...inter:" << intersection_size
+                std::cerr << "   input size: " << in_sizes[i]
+                          << " k-mers, output size: " << out_sizes[i]
+                          << " k-mers, intersection size: " << intersection_size << " k-mers"
                           << std::endl;
             }
         }
     }
 
     if (verbose) {
-        std::cerr << "=============" << std::endl;
-        std::cerr << "3) Assembling" << std::endl;
-        std::cerr << "=============" << std::endl;
+        std::cerr << "=======================" << std::endl;
+        std::cerr << "3) Computing simplitigs" << std::endl;
+        std::cerr << "=======================" << std::endl;
     }
 
     if (compute_output) {
