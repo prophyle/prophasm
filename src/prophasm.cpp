@@ -605,75 +605,82 @@ int main(int argc, char *argv[]) {
         fprintf(fstats, "\n");
     }
 
-    std::vector<std::unordered_set<nkmer_t>> full_sets(no_sets);
-    std::unordered_set<nkmer_t> intersection;
-    std::vector<int32_t> in_sizes;
-    std::vector<int32_t> out_sizes;
+    if (no_sets == 1) {
+        std::unordered_set<nkmer_t> full_set;
+        kmers_from_fasta(in_fns[0], full_set, k, fstats, verbose);
+        assemble(out_fns[0], full_set, k, fstats, verbose);
+    } else {
+        std::vector<std::unordered_set<nkmer_t>> full_sets(no_sets);
+        std::unordered_set<nkmer_t> intersection;
+        std::vector<int32_t> in_sizes;
+        std::vector<int32_t> out_sizes;
 
-    if (verbose) {
-        std::cerr << "======================" << std::endl;
-        std::cerr << "1) Loading input files" << std::endl;
-        std::cerr << "======================" << std::endl;
-    }
-
-    for (int32_t i = 0; i < no_sets; i++) {
-        kmers_from_fasta(in_fns[i], full_sets[i], k, fstats, verbose);
-        // debug_print_kmer_set(full_sets[i],k);
-        in_sizes.insert(in_sizes.end(), full_sets[i].size());
-    }
-
-    if (verbose) {
-        std::cerr << "===============" << std::endl;
-        std::cerr << "2) Intersecting" << std::endl;
-        std::cerr << "===============" << std::endl;
-    }
-
-    int32_t intersection_size = 0;
-
-    if (compute_intersection) {
         if (verbose) {
-            std::cerr << "2.1) Computing the intersection" << std::endl;
+            std::cerr << "======================" << std::endl;
+            std::cerr << "1) Loading input files" << std::endl;
+            std::cerr << "======================" << std::endl;
         }
 
-        find_intersection(full_sets, intersection);
-        intersection_size = intersection.size();
-        if (verbose) {
-            std::cerr << "   intersection size: " << intersection_size << " k-mers" << std::endl;
-        }
-        if (compute_differences) {
-            if (verbose) {
-                std::cerr << "2.2) Computing set differences" << std::endl;
-            }
-            remove_subset(full_sets, intersection);
-        }
-    }
-
-    if (compute_differences) {
         for (int32_t i = 0; i < no_sets; i++) {
-            out_sizes.insert(out_sizes.end(), full_sets[i].size());
-            assert(in_sizes[i] == out_sizes[i] + intersection_size);
+            kmers_from_fasta(in_fns[i], full_sets[i], k, fstats, verbose);
+            // debug_print_kmer_set(full_sets[i],k);
+            in_sizes.insert(in_sizes.end(), full_sets[i].size());
+        }
+
+        if (verbose) {
+            std::cerr << "===============" << std::endl;
+            std::cerr << "2) Intersecting" << std::endl;
+            std::cerr << "===============" << std::endl;
+        }
+
+        int32_t intersection_size = 0;
+
+        if (compute_intersection) {
             if (verbose) {
-                std::cerr << "   input size: " << in_sizes[i]
-                          << " k-mers, output size: " << out_sizes[i]
-                          << " k-mers, intersection size: " << intersection_size << " k-mers"
+                std::cerr << "2.1) Computing the intersection" << std::endl;
+            }
+
+            find_intersection(full_sets, intersection);
+            intersection_size = intersection.size();
+            if (verbose) {
+                std::cerr << "   intersection size: " << intersection_size << " k-mers"
                           << std::endl;
             }
+            if (compute_differences) {
+                if (verbose) {
+                    std::cerr << "2.2) Computing set differences" << std::endl;
+                }
+                remove_subset(full_sets, intersection);
+            }
         }
-    }
 
-    if (verbose) {
-        std::cerr << "=======================" << std::endl;
-        std::cerr << "3) Computing simplitigs" << std::endl;
-        std::cerr << "=======================" << std::endl;
-    }
-
-    if (compute_differences) {
-        for (int32_t i = 0; i < static_cast<int32_t>(in_fns.size()); i++) {
-            assemble(out_fns[i], full_sets[i], k, fstats, verbose);
+        if (compute_differences) {
+            for (int32_t i = 0; i < no_sets; i++) {
+                out_sizes.insert(out_sizes.end(), full_sets[i].size());
+                assert(in_sizes[i] == out_sizes[i] + intersection_size);
+                if (verbose) {
+                    std::cerr << "   input size: " << in_sizes[i]
+                              << " k-mers, output size: " << out_sizes[i]
+                              << " k-mers, intersection size: " << intersection_size << " k-mers"
+                              << std::endl;
+                }
+            }
         }
-    }
-    if (compute_intersection) {
-        assemble(intersection_fn, intersection, k, fstats, verbose);
+
+        if (verbose) {
+            std::cerr << "=======================" << std::endl;
+            std::cerr << "3) Computing simplitigs" << std::endl;
+            std::cerr << "=======================" << std::endl;
+        }
+
+        if (compute_differences) {
+            for (int32_t i = 0; i < static_cast<int32_t>(in_fns.size()); i++) {
+                assemble(out_fns[i], full_sets[i], k, fstats, verbose);
+            }
+        }
+        if (compute_intersection) {
+            assemble(intersection_fn, intersection, k, fstats, verbose);
+        }
     }
 
     if (fstats) {
