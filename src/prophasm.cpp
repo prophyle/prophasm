@@ -110,7 +110,7 @@ void print_help() {
         << " -o FILE  output FASTA file (if used, must be used as many times as -i)\n"
         << " -x FILE  compute intersection, subtract it, save it\n"
         << " -s FILE  output file with k-mer statistics\n"
-        << " -s       silent mode\n"
+        << " -S       silent mode\n"
         << "\n"
         << "Note that '-' can be used for standard input/output. \n"
         << std::endl;
