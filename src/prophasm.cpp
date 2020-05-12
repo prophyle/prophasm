@@ -500,7 +500,7 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
 
     fclose(file);
 
-    const int64_t ns = simplitig_id;
+    const int64_t ns = simplitig_id - 1;
     const int64_t cl = kmers + ns * (k - 1);
     if (verbose) {
         std::cerr << "   simplitig computation finished (" << ns << " simplitigs, "
