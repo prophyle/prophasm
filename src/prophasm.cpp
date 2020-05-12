@@ -89,32 +89,31 @@ static const uint8_t nt256_nt4[] = {
 KSEQ_INIT(gzFile, gzread)
 
 void print_help() {
-    std::cerr << "\n"
-              << "Program:  prophasm (computation of simplitigs and k-mer set operations)\n"
-              << "Version:  " VERSION "\n"
-              << "Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>\n"
-              << "\n"
-              << "Usage:    prophasm [options]\n"
-              << "\n"
-              << "Examples: prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa\n"
-              << "             - compute intersection of f1 and f2\n"
-              << "          prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa -o g1.fa -o g2.fa\n"
-              << "             - compute intersection of f1 and f2, and subtract it from them\n"
-              << "          prophasm -k 15 -i f1.fa -o g1.fa\n"
-              << "             - re-assemble f1 to g1\n"
-              << "\n"
-              << "Command-line parameters:\n"
-              << " -k INT   K-mer length.\n"
-              << " -i FILE  Input FASTA file (can be used multiple times).\n"
-              << " -o FILE  Output FASTA file (if used, must be used as many times as -i).\n"
-              << " -x FILE  Compute intersection, subtract it, save it.\n"
-              << " -s FILE  Output file with k-mer statistics.\n"
-              <<
-        //" -k INT   K-mer length. [" << default_k << "]\n" <<
-        " -S       Silent mode.\n"
-              << "\n"
-              << "Note that '-' can be used for standard input/output. \n"
-              << std::endl;
+    std::cerr
+        << "\n"
+        << "Program:  prophasm (computation of simplitigs and k-mer set operations)\n"
+        << "Version:  " VERSION "\n"
+        << "Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>\n"
+        << "\n"
+        << "Usage:    prophasm [options]\n"
+        << "\n"
+        << "Examples: prophasm -k 31 -i ref.fa -o simplitigs.fa\n"
+        << "           - compute simplitigs of ref.fa\n"
+        << "          prophasm -k 31 -i ref1.fa -i ref2.fa -x inter.fa\n"
+        << "           - intersect the k-mers sets of ref1 and ref2\n"
+        << "          prophasm -k 31 -i ref1.fa -i ref2.fa -x inter.fa -o dif1.fa -o dif2.fa\n"
+        << "           - intersect ref1 and ref2, and compute the set differences\n"
+        << "\n"
+        << "Command-line parameters:\n"
+        << " -k INT   k-mer length (from [1, 32])\n"
+        << " -i FILE  input FASTA file (can be used multiple times)\n"
+        << " -o FILE  output FASTA file (if used, must be used as many times as -i)\n"
+        << " -x FILE  compute intersection, subtract it, save it\n"
+        << " -s FILE  output file with k-mer statistics\n"
+        << " -s       silent mode\n"
+        << "\n"
+        << "Note that '-' can be used for standard input/output. \n"
+        << std::endl;
 }
 
 void test_file(FILE *fo, std::string fn) {
@@ -524,8 +523,8 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    bool compute_intersection = false;
-    bool compute_output       = false;
+    bool compute_intersection = true;
+    bool compute_differences  = false;
     bool verbose              = true;
     int32_t no_sets           = 0;
 
@@ -544,12 +543,11 @@ int main(int argc, char *argv[]) {
             }
             case 'o': {
                 out_fns.push_back(std::string(optarg));
-                compute_output = true;
+                compute_differences = true;
                 break;
             }
             case 'x': {
-                intersection_fn      = std::string(optarg);
-                compute_intersection = true;
+                intersection_fn = std::string(optarg);
                 break;
             }
             case 's': {
@@ -592,7 +590,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    if (compute_output && (static_cast<int32_t>(out_fns.size()) != no_sets)) {
+    if (compute_differences && (static_cast<int32_t>(out_fns.size()) != no_sets)) {
         std::cerr << "If -o is used, it must be used as many times as -i (" << no_sets
                   << "!=" << out_fns.size() << ")." << std::endl;
         return EXIT_FAILURE;
@@ -608,15 +606,15 @@ int main(int argc, char *argv[]) {
     }
 
     std::vector<std::unordered_set<nkmer_t>> full_sets(no_sets);
+    std::unordered_set<nkmer_t> intersection;
+    std::vector<int32_t> in_sizes;
+    std::vector<int32_t> out_sizes;
 
     if (verbose) {
         std::cerr << "======================" << std::endl;
         std::cerr << "1) Loading input files" << std::endl;
         std::cerr << "======================" << std::endl;
     }
-
-    std::vector<int32_t> in_sizes;
-    std::vector<int32_t> out_sizes;
 
     for (int32_t i = 0; i < no_sets; i++) {
         kmers_from_fasta(in_fns[i], full_sets[i], k, fstats, verbose);
@@ -630,8 +628,6 @@ int main(int argc, char *argv[]) {
         std::cerr << "===============" << std::endl;
     }
 
-    std::unordered_set<nkmer_t> intersection;
-
     int32_t intersection_size = 0;
 
     if (compute_intersection) {
@@ -644,7 +640,7 @@ int main(int argc, char *argv[]) {
         if (verbose) {
             std::cerr << "   intersection size: " << intersection_size << " k-mers" << std::endl;
         }
-        if (compute_output) {
+        if (compute_differences) {
             if (verbose) {
                 std::cerr << "2.2) Computing set differences" << std::endl;
             }
@@ -652,7 +648,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (compute_output) {
+    if (compute_differences) {
         for (int32_t i = 0; i < no_sets; i++) {
             out_sizes.insert(out_sizes.end(), full_sets[i].size());
             assert(in_sizes[i] == out_sizes[i] + intersection_size);
@@ -671,7 +667,7 @@ int main(int argc, char *argv[]) {
         std::cerr << "=======================" << std::endl;
     }
 
-    if (compute_output) {
+    if (compute_differences) {
         for (int32_t i = 0; i < static_cast<int32_t>(in_fns.size()); i++) {
             assemble(out_fns[i], full_sets[i], k, fstats, verbose);
         }
