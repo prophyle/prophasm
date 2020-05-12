@@ -60,7 +60,6 @@ typedef uint64_t nkmer_t;
 typedef std::set<nkmer_t> set_t;
 
 const int32_t max_simplitig_length    = 10000000;
-const int32_t fasta_line_length       = max_simplitig_length;  // do not break fasta lines
 const int32_t max_allowed_kmer_length = sizeof(nkmer_t) * 4;
 // const int32_t default_k=31;
 
@@ -294,12 +293,7 @@ struct simplitig_t {
             fprintf(fasta_file, ">%s %s\n", simplitig_name, comment);
         }
 
-        char print_buffer[fasta_line_length + 1] = {0};
-
-        for (char *p = l_ext; p < r_ext; p += fasta_line_length) {
-            strncpy(print_buffer, p, fasta_line_length);
-            fprintf(fasta_file, "%s\n", print_buffer);
-        }
+        fprintf(fasta_file, "%s\n", l_ext);
 
         return 0;
     }
