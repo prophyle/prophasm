@@ -90,7 +90,7 @@ KSEQ_INIT(gzFile, gzread)
 
 void print_help() {
     std::cerr << "\n"
-              << "Program:  prophasm (a greedy assembler for k-mer set compression)\n"
+              << "Program:  prophasm (computation of simplitigs and k-mer set operations)\n"
               << "Version:  " VERSION "\n"
               << "Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>\n"
               << "\n"
