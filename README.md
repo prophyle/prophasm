@@ -18,18 +18,18 @@
 
 ## Introduction
 
-ProphAsm is a tool for computing simplitigs from k-mer sets. Simplitigs are
-genomic sequences computed as disjoint paths in a bidirectional vertex-centric
+ProphAsm is a tool for computing *simplitigs* from *k-mer sets*. Simplitigs are
+strings obtained as disjoint paths in a bidirectional vertex-centric
 de Bruijn graph. Compared to unitigs, simplitigs provide an improvement in the
 number of sequences and their cumulative length, while both representations
-carry the same k-mers. See our
-[paper](https://doi.org/10.1101/2020.01.12.903443) for more details.
+carry the same k-mers. For more details, see the
+[paper](https://doi.org/10.1101/2020.01.12.903443).
 
-
-ProphAsm does not make any assumptions on the source datasets, which can be
-genomes, pan-genomes, metagenomes or sequencing reads. Besides computing
-simplitigs, ProphAsm can also compute intersection and set differences of k-mer
-sets (set unions can be computed simply by merging the source files).
+Various types of sequencing datasets can be used as the input for
+ProphAsm, including genomes, pan-genomes, metagenomes or sequencing reads.
+Besides computing simplitigs, ProphAsm can also compute intersection
+and set differences of k-mer
+sets (while set unions are easy to compute simply by merging the source files).
 
 Upon execution, ProphAsm first loads all specified datasets (see the `-i`
 param) and the corresponding k-mer sets (see the `-k` param). If the `-x` param
