@@ -90,26 +90,26 @@ Set operations:
 USAGE-BEGIN
 -->
 ```
-Program:  prophasm (a greedy assembler for k-mer set compression)
-Version:  0.1.1
+Program:  prophasm (computation of simplitigs and k-mer set operations)
+Version:  0.1.2
 Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>
 
 Usage:    prophasm [options]
 
-Examples: prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa
-             - compute intersection of f1 and f2
-          prophasm -k 15 -i f1.fa -i f2.fa -x fx.fa -o g1.fa -o g2.fa
-             - compute intersection of f1 and f2, and subtract it from them
-          prophasm -k 15 -i f1.fa -o g1.fa
-             - re-assemble f1 to g1
+Examples: prophasm -k 31 -i ref.fa -o simplitigs.fa
+           - compute simplitigs of ref.fa
+          prophasm -k 31 -i ref1.fa -i ref2.fa -x inter.fa
+           - intersect the k-mers sets of ref1 and ref2
+          prophasm -k 31 -i ref1.fa -i ref2.fa -x inter.fa -o dif1.fa -o dif2.fa
+           - intersect ref1 and ref2, and compute the set differences
 
 Command-line parameters:
- -k INT   K-mer size.
- -i FILE  Input FASTA file (can be used multiple times).
- -o FILE  Output FASTA file (if used, must be used as many times as -i).
- -x FILE  Compute intersection, subtract it, save it.
- -s FILE  Output file with k-mer statistics.
- -S       Silent mode.
+ -k INT   k-mer length (from [1, 32])
+ -i FILE  input FASTA file (can be used multiple times)
+ -o FILE  output FASTA file (if used, must be used as many times as -i)
+ -x FILE  compute intersection, subtract it, save it
+ -s FILE  output file with k-mer statistics
+ -S       silent mode
 
 Note that '-' can be used for standard input/output.
 
