@@ -5,12 +5,10 @@
 <!-- vim-markdown-toc GFM -->
 
 * [Introduction](#introduction)
+* [Cite](#cite)
 * [Prerequisities](#prerequisities)
 * [Getting started](#getting-started)
-* [Examples](#examples)
-* [Command line parameters](#command-line-parameters)
-* [Algorithm](#algorithm)
-* [Similar programs](#similar-programs)
+* [Links](#links)
 * [Issues](#issues)
 * [Changelog](#changelog)
 * [Licence](#licence)
@@ -20,22 +18,43 @@
 
 ## Introduction
 
-ProphAsm is a tool for computing simplitigs from k-mer sets and for k-mer set manipulation. Simplitigs are genomic sequences computed as disjoint paths in a bidirectional vertex-centric de Bruijn graph. Compared to unitigs, simplitigs provide an improvement in the total number of sequences and their cumulative length, while both representations contain exactly the same k-mers
+ProphAsm is a tool for computing *simplitigs* from *k-mer sets*. Simplitigs are
+strings obtained as disjoint paths in a bidirectional vertex-centric
+de Bruijn graph. Compared to unitigs, simplitigs provide an improvement in the
+number of sequences and their cumulative length, while both representations
+carry the same k-mers. For more details, see the
+[paper](https://doi.org/10.1101/2020.01.12.903443).
 
-Upon execution, ProphAsm first loads all specified datasets (see the `-i` param) and computes their k-mer sets (see the `-k` param). If the `-x` param is provided, ProphAsm then computes their intersection, subtracts the intersection from the individual k-mer sets and computes unitigs for the intersection. If output files are specified (see the `-o` param).
+Various types of sequencing datasets can be used as the input for
+ProphAsm, including genomes, pan-genomes, metagenomes or sequencing reads.
+Besides computing simplitigs, ProphAsm can also compute intersection
+and set differences of k-mer
+sets (while set unions are easy to compute simply by merging the source files).
+
+Upon execution, ProphAsm first loads all specified datasets (see the `-i`
+param) and the corresponding k-mer sets (see the `-k` param). If the `-x` param
+is provided, ProphAsm then computes their intersection, subtracts the
+intersection from the individual k-mer sets and computes simplitigs for the
+intersection. If output files are specified (see the `-o` param), it computes
+also set differences.
 
 
 ## Cite
 
-If you want to cite ProphAsm, please use the following reference:
+To cite _ProphAsm_ as a tool, please use the following reference:
 
 > Brinda K, Baym M, and Kucherov G. **Simplitigs as an efficient and scalable representation of de Bruijn graphs**
 . bioRxiv 2020.01.12.903443, 2020. https://doi.org/10.1101/2020.01.12.903443
 
-If you want to cite the concept of simplitigs, please include also the parallel manuscript (the same concept discovered independently and simultaneously):
+For _the concept of simplitigs_, please use the reference above and include
+also the following paper, introducing independently the same concept under the
+name spectrum-preserving string sets:
 
-> Rahman A and Medvedev P. **Representation of k-mer sets using spectrum-preserving string sets**
-. bioRxiv 2020.01.07.896928, 2020. https://doi.org/10.1101/2020.01.07.896928
+> Rahman A and Medvedev P. **Representation of k-mer sets using
+  spectrum-preserving string sets**. Research in Computational Molecular
+  Biology - 24th Annual International Conference, {RECOMB} 2020, Padua, Italy,
+  May 10-13, 2020, Proceedings. Lecture Notes in Computer Science 12074, pp.
+  152-168, Springer, 2020. https://doi.org/10.1007/978-3-030-45257-5_10
 
 
 ## Prerequisities
@@ -46,20 +65,23 @@ If you want to cite the concept of simplitigs, please include also the parallel 
 
 ## Getting started
 
+Download and compile ProphAsm:
+
 ```
 git clone https://github.com/prophyle/prophasm
 cd prophasm && make -j
+```
+
+Compute simplitigs:
+
+```
+./prophasm -k 15 -i tests/test1.fa -o simplitigs.fa
+```
+
+Set operations:
+```
 ./prophasm -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
-```
-
-## Examples
-
-```bash
-prophasm -k 31 -i input.fa -o simplitigs.fa  # compute simplitigs for a single dataset
-prophasm -k 31 -i inset1.fa -i inset2.fa -o outset1.fa outset2.fa  # compute simplitigs for two datasets
-prophasm -k 31 -i inset1.fa -i inset2.fa -x intersect.fa -o outset1.fa outset2.fa  # compute simplitigs for two datasets and subtract their intersection
-
-```
+   ```
 
 
 ## Command line parameters
@@ -141,10 +163,12 @@ def compute_simplitigs (kmers):
 <img alt="Greedy assembly" src="figures/greedy_assembly.png" height="150px" width="540px" /><img alt="Subtraction of k-mer sets" src="figures/subtraction.png" height="180px" width="355px" />
 -->
 
-## Similar programs
+## Links
 
-* [BCalm 2](https://github.com/GATB/bcalm) - Computation of unitigs.
-* [Unikmer](https://github.com/shenwei356/unikmer) - K-mer set operations.
+* [Sneak peek at the -tigs!](https://kamimrcht.github.io/webpage/tigs.html) - An overview of different *tigs in computational biology.
+* [UST](https://github.com/medvedevgroup/UST/) - Another tool for computing simplitigs. Unlike ProphAsm, UST requires pre-computed unitigs as the input, therefore the method is overall more resource-demanding.
+* [BCalm 2](https://github.com/GATB/bcalm) - The best available tool for computing unitigs.
+* [Unikmer](https://github.com/shenwei356/unikmer) - Another tool for k-mer set operations.
 
 
 ## Issues
