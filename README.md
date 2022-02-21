@@ -60,7 +60,7 @@ To cite the concept of simplitigs and _ProphAsm_ as a tool, please use the follo
 ```
 
 
-For the concept of simplitigs, you might also consider citing the following paper,
+For the concept of simplitigs, you might also consider citing the following paper from another group,
 introducing independently the same concept under the name
 _spectrum-preserving string sets_ (SPSS):
 
