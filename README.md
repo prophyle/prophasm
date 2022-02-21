@@ -41,20 +41,31 @@ also set differences.
 
 ## Cite
 
-To cite _ProphAsm_ as a tool, please use the following reference:
+To cite the concept of simplitigs and _ProphAsm_ as a tool, please use the following reference:
 
-> Brinda K, Baym M, and Kucherov G. **Simplitigs as an efficient and scalable representation of de Bruijn graphs**
-. bioRxiv 2020.01.12.903443, 2020. https://doi.org/10.1101/2020.01.12.903443
+> Břinda K, Baym M, Kucherov G.
+> **Simplitigs as an efficient and scalable representation of de Bruijn graphs.**
+*Genome Biology* **22**(96), 2021; doi: https://doi.org/10.1186/s13059-021-02297-z
 
-For _the concept of simplitigs_, please use the reference above and include
-also the following paper, introducing independently the same concept under the
-name spectrum-preserving string sets:
+```
+@article{brinda2021-simplitigs,
+  title   = { Simplitigs as an efficient and scalable representation of de {Bruijn} graphs },
+  author  = { Karel B{\v r}inda and Michael Baym and Gregory Kucherov },
+  journal = { Genome Biology },
+  volume  = { 22 },
+  number  = { 96 },
+  year    = { 2021 },
+  doi     = { 10.1186/s13059-021-02297-z }
+}
+```
+
+
+For the concept of simplitigs, you might also consider citing the following paper,
+introducing independently the same concept under the name
+_spectrum-preserving string sets_ (SPSS):
 
 > Rahman A and Medvedev P. **Representation of k-mer sets using
-  spectrum-preserving string sets**. Research in Computational Molecular
-  Biology - 24th Annual International Conference, {RECOMB} 2020, Padua, Italy,
-  May 10-13, 2020, Proceedings. Lecture Notes in Computer Science 12074, pp.
-  152-168, Springer, 2020. https://doi.org/10.1007/978-3-030-45257-5_10
+  spectrum-preserving string sets.** *Journal of Computational Biology* **28**(4), pp. 381-394, 2021. https://doi.org/10.1089/cmb.2020.0431
 
 
 ## Prerequisities
