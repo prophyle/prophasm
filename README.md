@@ -143,10 +143,10 @@ def extend_simplitig_forward (K, simplitig):
 			if kmer in K:
 				extending = True
 				simplitig = simplitig + x
-				S.remove (kmer)
-				S.remove (reverse_complement (kmer))
+				K.remove (kmer)
+				K.remove (reverse_complement (kmer))
 				break
-	return S, s
+	return K, simplitig
 
 def get_maximal_simplitig (K, initial_kmer):
 	simplitig = initial_kmer
