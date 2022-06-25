@@ -151,9 +151,9 @@ def extend_simplitig_forward (K, simplitig):
 def get_maximal_simplitig (K, initial_kmer):
 	simplitig = initial_kmer
 	K.remove (initial_kmer)
-	K.remove (reverse_completement (initial_kmer))
+	K.remove (reverse_complement (initial_kmer))
 	K, simplitig = extend_simplitig_forward (K, simplitig)
-	simplitig = reverse_completent (simplitig)
+	simplitig = reverse_complement (simplitig)
 	K, simplitig = extend_simplitig_forward (K, simplitig)
 	return K, simplitig
 
@@ -161,7 +161,7 @@ def compute_simplitigs (kmers):
 	K = set()
 	for kmer in kmers:
 		K.add (kmer)
-		K.add (reverse_completement(kmer))
+		K.add (reverse_complement(kmer))
 	simplitigs = set()
 	while |K|>0:
 		initial_kmer = K.random()
