@@ -1,4 +1,4 @@
-.PHONY: all help clean test prophasm readme
+.PHONY: all help clean test prophasm readme format
 
 SHELL=/usr/bin/env bash -eo pipefail
 
@@ -14,6 +14,9 @@ help: ## Print help message
 
 test:
 	$(MAKE) -C tests
+
+format:
+	clang-format -i src/*.cpp #src/*.h
 
 readme:
 	f=$$(mktemp);\
