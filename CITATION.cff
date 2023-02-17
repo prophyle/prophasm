@@ -1,0 +1,33 @@
+# vim: set ft=yaml ts=2 sts=2 sw=2 expandtab:
+cff-version: 1.2.0
+title: ProphAsm
+message: "If you use this software, please cite both the article from preferred-citation and the software itself."
+type: software
+authors:
+  - family-names: Břinda
+    given-names: Karel
+    email: karel.brinda@inria.fr
+    orcid: "https://orcid.org/0000-0003-0200-557X"
+doi: 10.5281/zenodo.3887034
+repository-code: 'https://github.com/prophyle/prophasm'
+license: MIT
+preferred-citation:
+  authors:
+    - family-names: Břinda
+      given-names: Karel
+      email: karel.brinda@inria.fr
+      orcid: "https://orcid.org/0000-0003-0200-557X"
+    - family-names: Baym
+      given-names: Michael
+      email: baym@hms.harvard.edu
+      orcid: "https://orcid.org/0000-0003-1303-5598"
+    - family-names: Kucherov
+      given-names: Gregory
+      email: gregory.kucherov@univ-eiffel.fr
+      orcid: "https://orcid.org/0000-0001-5899-5424"
+  type: article
+  title: "Simplitigs as an efficient and scalable representation of de Bruijn graphs"
+  year: 2021
+  journal: Genome Biology
+  volume: 22
+  doi: 10.1186/s13059-021-02297-z
