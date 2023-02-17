@@ -2,7 +2,7 @@
 
 """A program to verify output of prophasm.
 
-Author: Karel Brinda <kbrinda@hsph.harvard.edu>
+Author: Karel Brinda <karel.brinda@inria.fr>
 
 Licence: MIT
 """

@@ -8,6 +8,7 @@
 * [Cite](#cite)
 * [Prerequisities](#prerequisities)
 * [Getting started](#getting-started)
+* [How to use](#how-to-use)
 * [Links](#links)
 * [Issues](#issues)
 * [Changelog](#changelog)
@@ -78,13 +79,16 @@ Compute simplitigs:
 ./prophasm -k 15 -i tests/test1.fa -o simplitigs.fa
 ```
 
+
+## How to use
+
 Set operations:
 ```
 ./prophasm -k 15 -i tests/test1.fa -i tests/test2.fa -o _out1.fa -o _out2.fa -x _intersect.fa -s _stats.tsv
    ```
 
 
-## Command line parameters
+## Command-line arguments
 
 <!---
 USAGE-BEGIN
@@ -92,7 +96,7 @@ USAGE-BEGIN
 ```
 Program:  prophasm (computation of simplitigs and k-mer set operations)
 Version:  0.1.2
-Contact:  Karel Brinda <karel.brinda@hms.harvard.edu>
+Contact:  Karel Brinda <karel.brinda@inria.fr>
 
 Usage:    prophasm [options]
 

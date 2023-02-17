@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 """Normalize a FASTA file (in order to compare different FASTA files).
 
-Author: Karel Brinda <kbrinda@hsph.harvard.edu>
+Author: Karel Brinda <karel.brinda@inria.fr>
 
 Licence: MIT
 """
