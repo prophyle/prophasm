@@ -327,11 +327,11 @@ int kmers_from_fasta(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *
 
     typename _set_T::value_type nkmer;
 
-    int64_t ns=0;
-    int64_t cl=0;
+    int64_t ns = 0;
+    int64_t cl = 0;
     for (int32_t seqid = 0; (l = kseq_read(seq)) >= 0; seqid++) {
-		ns++;
-		cl+=seq->seq.l;
+        ns++;
+        cl += seq->seq.l;
         for (char *kmer = seq->seq.s; kmer < (seq->seq.s) + (seq->seq.l) - k + 1; kmer++) {
             int c = encode_canonical(kmer, k, nkmer);
             if (c == 0) {
@@ -342,7 +342,6 @@ int kmers_from_fasta(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *
         }
     }
 
-
     if (fstats) {
         fprintf(fstats, "%s\t%lu\n", fasta_fn.c_str(), set.size());
     }
@@ -352,8 +351,8 @@ int kmers_from_fasta(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *
     gzclose(fp);
 
     if (verbose) {
-        std::cerr << "      #kmers=" << set.size() << ", NS=" << ns << ", CL="
-                  << cl << " bp (" << round(cl*1e-4)*1e-2 << " Mbp)" << std::endl;
+        std::cerr << "      #kmers=" << set.size() << ", NS=" << ns << ", CL=" << cl << " bp ("
+                  << round(cl * 1e-4) * 1e-2 << " Mbp)" << std::endl;
     }
 
     return 0;
@@ -510,8 +509,8 @@ int assemble(const std::string &fasta_fn, _set_T &set, int32_t k, FILE *fstats, 
     const int64_t cl = kmers + ns * (k - 1);
     if (verbose) {
         std::cerr << "   simplitig computation finished (" << fasta_fn << ")" << std::endl;
-        std::cerr << "      #kmers=" << kmers << ", NS=" << ns << ", CL="
-                  << cl << " bp (" << round(cl*1e-4)*1e-2 << " Mbp)" << std::endl;
+        std::cerr << "      #kmers=" << kmers << ", NS=" << ns << ", CL=" << cl << " bp ("
+                  << round(cl * 1e-4) * 1e-2 << " Mbp)" << std::endl;
     }
 
     return 0;
@@ -651,8 +650,7 @@ int main(int argc, char *argv[]) {
             find_intersection(full_sets, intersection);
             intersection_size = intersection.size();
             if (verbose) {
-                std::cerr << "   intersection: #kmers=" << intersection_size
-                          << std::endl;
+                std::cerr << "   intersection: #kmers=" << intersection_size << std::endl;
             }
             if (compute_differences) {
                 if (verbose) {
@@ -667,9 +665,9 @@ int main(int argc, char *argv[]) {
                 out_sizes.insert(out_sizes.end(), full_sets[i].size());
                 assert(in_sizes[i] == out_sizes[i] + intersection_size);
                 if (verbose) {
-                    std::cerr << "   input: #kmers=" << in_sizes[i]
-                              << ", output: #kmers=" << out_sizes[i]
-							  //<< ", intersection size: " << intersection_size << " k-mers"
+                    std::cerr << "   input: #kmers=" << in_sizes[i] << ", output: #kmers="
+                              << out_sizes[i]
+                              //<< ", intersection size: " << intersection_size << " k-mers"
                               << std::endl;
                 }
             }
